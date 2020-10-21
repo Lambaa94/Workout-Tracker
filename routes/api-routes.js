@@ -1,7 +1,4 @@
-const path = require("path")
-// var db = require("../models");
 const mongojs = require("mongojs");
-const mongoose = require("mongoose");
 
 const databaseUrl = "workout";
 const collections = ["workouts"];
@@ -12,6 +9,15 @@ db.on("error", error => {
     console.log("Database Error:", error);
 });
 
+
+//Mongoose
+// let mongoose = require("mongoose");
+// let db = require("../models");
+
+// mongoose.connect("mongodb://localhost/workout", {
+//   useNewUrlParser: true,
+//   useFindAndModify: false
+// });
 
 
 
@@ -50,11 +56,10 @@ module.exports = function (app) {
         })
     });
 
-    //Update an exercise
-
-
+    
+    // Update an exercise
     // Route to add an exercise
-    // /api/workouts/:id
+  
     app.put("/api/workouts/:id", function (req, res) {
         const id = req.params.id
         db.workouts.replaceOne({ _id: mongojs.ObjectId(id) }, {
@@ -74,7 +79,7 @@ module.exports = function (app) {
     // to get workouts in range..?
     // /api/workouts/range
     app.get("/api/workouts/range", function (req, res) {
-        db.workouts.find().sort({ day: 1 }).limit(7, (err, data) => {
+        db.workouts.find({}).sort({ day: 1 }).limit(7, (err, data) => {
             if (err) {
                 console.log(err);
             } else {
