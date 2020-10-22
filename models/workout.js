@@ -36,7 +36,6 @@ const WorkoutSchema = new Schema({
         }
     }
 ]
-
     // This activates virtuals //
 
  }, { toJSON: { virtuals: true } 

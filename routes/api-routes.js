@@ -44,7 +44,7 @@ module.exports = function (app) {
         const id = req.params.id
         db.Workout.findByIdAndUpdate({ _id: mongoose.Types.ObjectId(id) }, 
             { $push:  { exercises: req.body }},
-            { new: true }, 
+            { new: true },
             (err, data) => {
             if (err) {
                 console.log(err);
@@ -57,12 +57,12 @@ module.exports = function (app) {
     // to get workouts in range..
     // /api/workouts/range
     app.get("/api/workouts/range", function(req, res) {
-        db.Workout.find({}, (err, data) => {
-            if (err) {
-                console.log(err);
-            } else {
-                res.json(data)
-            }
+        db.Workout.find({}).sort({day: 1}).limit(7).then( data  => {
+            console.log(data)
+            res.json(data)
+            
+        }).catch(err => {
+            console.log(err)
         });
     });
 }

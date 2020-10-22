@@ -17,12 +17,12 @@ body {
 }
 
 nav {
-  background-color: #5793fd;
+  background-color: rgba(46, 157, 191, 0.899);
   color: #ffffff;
   height: 80px;
   padding: 10px;
   line-height: 3;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
 }
 
 a,
@@ -371,10 +371,6 @@ form > button {
   margin-top: 5px;
   margin-bottom: 5px;
 }
-
-/* .workout .card {
-  width: 350px;
-} */
 
 .prev-workout button {
   margin: 10px;

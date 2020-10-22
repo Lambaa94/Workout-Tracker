@@ -6,14 +6,14 @@ fetch("/api/workouts/range")
   })
   .then(data => {
     populateChart(data);
-    
+
   });
 
 
 API.getWorkoutsInRange()
 
-  function generatePalette() {
-    const arr = [
+function generatePalette() {
+  const arr = [
     "#003f5c",
     "#2f4b7c",
     "#665191",
@@ -33,7 +33,7 @@ API.getWorkoutsInRange()
   ]
 
   return arr;
-  }
+}
 function populateChart(data) {
   let durations = duration(data);
   let pounds = calculateTotalWeight(data);
@@ -44,19 +44,32 @@ function populateChart(data) {
   let bar = document.querySelector("#canvas2").getContext("2d");
   let pie = document.querySelector("#canvas3").getContext("2d");
   let pie2 = document.querySelector("#canvas4").getContext("2d");
+ // setting up function to display realtime days
+  function labelSet(data) {
+    const days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ];
+    const labels = [];
+    for (let i = 0; i < data.length; i++) {
+      let dayNum = new Date(data[i].day).getDay();
+      let month = new Date(data[i].day).getMonth() + 1;
+      let date = new Date(data[i].day).getDate();
+      labels.push(`${days[dayNum]} ${month}/${date}`);
+    }
+    return labels;
+  }
+  const labelDay = labelSet(data);
 
-  let lineChart = new Chart(line, {
+  lineChart = new Chart(line, {
     type: "line",
     data: {
-      labels: [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-      ],
+      labels: labelDay,
       datasets: [
         {
           label: "Workout Duration In Minutes",
@@ -70,7 +83,8 @@ function populateChart(data) {
     options: {
       responsive: true,
       title: {
-        display: true
+        display: true,
+        text: "Workout Duration Per Exercise"
       },
       scales: {
         xAxes: [
@@ -93,18 +107,10 @@ function populateChart(data) {
     }
   });
 
-  let barChart = new Chart(bar, {
+  barChart = new Chart(bar, {
     type: "bar",
     data: {
-      labels: [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-      ],
+      labels: labelDay,
       datasets: [
         {
           label: "Pounds",
@@ -146,13 +152,13 @@ function populateChart(data) {
     }
   });
 
-  let pieChart = new Chart(pie, {
+  pieChart = new Chart(pie, {
     type: "pie",
     data: {
       labels: workouts,
       datasets: [
         {
-          label: "Excercises Performed",
+          label: "Duration",
           backgroundColor: colors,
           data: durations
         }
@@ -161,12 +167,12 @@ function populateChart(data) {
     options: {
       title: {
         display: true,
-        text: "Excercises Performed"
+        text: "Total Duration"
       }
     }
   });
 
-  let donutChart = new Chart(pie2, {
+  donutChart = new Chart(pie2, {
     type: "doughnut",
     data: {
       labels: workouts,
@@ -181,7 +187,7 @@ function populateChart(data) {
     options: {
       title: {
         display: true,
-        text: "Excercises Performed"
+        text: "Total Weight Lifted"
       }
     }
   });
@@ -201,7 +207,7 @@ function duration(data) {
 
 function calculateTotalWeight(data) {
   let total = [];
-  
+
   data.forEach(workout => {
     workout.exercises.forEach(exercise => {
       total.push(exercise.weight);
@@ -213,12 +219,12 @@ function calculateTotalWeight(data) {
 
 function workoutNames(data) {
   let workouts = [];
-  
+
   data.forEach(workout => {
     workout.exercises.forEach(exercise => {
       workouts.push(exercise.name);
     });
   });
-  
+
   return workouts;
 }
