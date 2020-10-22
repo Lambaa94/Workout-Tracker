@@ -37,14 +37,15 @@ const WorkoutSchema = new Schema({
     }
 ]
 
-    // This activates virtuals
+    // This activates virtuals //
 
  }, { toJSON: { virtuals: true } 
 
 });
 
-// will take totalDuration of all workouts and reduce them to one number then adds.//
-
+// will take totalDuration of all workouts //
+// and reduce them to one number then adds.//
+// at the bottom it is defaulting to 0 //
 WorkoutSchema.virtual("totalDuration").get(function () {
     return this.exercises.reduce((total, exercise) => {
         return total + exercise.duration
@@ -52,7 +53,7 @@ WorkoutSchema.virtual("totalDuration").get(function () {
 })
 
 
-const workout = mongoose.model("workout", WorkoutSchema);
+const Workout = mongoose.model("workout", WorkoutSchema);
 
-module.exports = workout;
+module.exports = Workout;
 

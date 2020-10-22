@@ -13,7 +13,7 @@ mongoose.connect("mongodb://localhost/workout", {
 module.exports = function (app) {
     
     app.get("/api/workouts", function (req, res) {
-        db.workout.find({}, (err, data) => {
+        db.Workout.find({}, (err, data) => {
             if (err) {
                 console.log(err);
 
@@ -27,7 +27,7 @@ module.exports = function (app) {
     // /api/workouts
 
     app.post("/api/workouts", function (req, res) {
-        db.workout.create({}, (err, data) => {
+        db.Workout.create({}, (err, data) => {
             if (err) {
                 console.log(err);
             } else {
@@ -42,8 +42,8 @@ module.exports = function (app) {
   
     app.put("/api/workouts/:id", function (req, res) {
         const id = req.params.id
-        db.workout.findByIdAndUpdate({ _id: mongoose.Types.ObjectId(id) }, 
-            { $push:  {exercises: req.body }},
+        db.Workout.findByIdAndUpdate({ _id: mongoose.Types.ObjectId(id) }, 
+            { $push:  { exercises: req.body }},
             { new: true }, 
             (err, data) => {
             if (err) {
@@ -56,8 +56,8 @@ module.exports = function (app) {
 
     // to get workouts in range..
     // /api/workouts/range
-    app.get("/api/workouts/range", function (req, res) {
-        db.workout.find({}).sort({ day: 1 }).limit(7, (err, data) => {
+    app.get("/api/workouts/range", function(req, res) {
+        db.Workout.find({}, (err, data) => {
             if (err) {
                 console.log(err);
             } else {
@@ -65,5 +65,4 @@ module.exports = function (app) {
             }
         });
     });
-
 }
