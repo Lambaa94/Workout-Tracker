@@ -3,18 +3,24 @@ const Schema = mongoose.Schema;
 
 
 const WorkoutSchema = new Schema({
-    day: Date,
+    day: {
+        type: Date,
+        default: Date.now() 
+    },
     exercises: [{
         type: {
             type: String,
-            trim: true
+            trim: true,
+            required: true 
         },
         name: {
             type: String,
-            trim: true
+            trim: true,
+            required: true
         },
         duration: {
-            type: Number
+            type: Number,
+            required: true
         },
         distance: {
             type: Number
@@ -30,9 +36,14 @@ const WorkoutSchema = new Schema({
         }
     }
 ]
+
+    // This activates virtuals
+
  }, { toJSON: { virtuals: true } 
+
 });
 
+// will take totalDuration of all workouts and reduce them to one number then adds.//
 
 WorkoutSchema.virtual("totalDuration").get(function () {
     return this.exercises.reduce((total, exercise) => {
