@@ -2,7 +2,9 @@
 
 
 ## Description
+This project gave me good insight on a real world expierence. When given code that is broken how can you go about fixing it. This was my first project that deals with *mongoose* and *mongojs* in which I have learned to enjoy. What this does is it takes in user inputed data and is stored in a database in which it tallies up certain totals for the user. This application also uses *chartjs* to provide visuals with graphs and charts on the past seven days that you have added workouts.
 
+I definitely stuggled with figuring out how to add up the total duration of all workouts listed but was able to learn how to use virtuals and how useful they can be.
 
 
 ## Table of Contents
@@ -17,7 +19,7 @@
 
 *Below is a GIF demonstrating the usage of the application*
 
-![Gif-of-application]()
+![Gif-of-application](Track-and-Sweat.gif)
 
 *Below is a link to the deployed application.*
 
